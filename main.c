@@ -1,7 +1,20 @@
+#include "main.h"
 #define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+//extern int do_exit(int, char**);
+//extern int do_cd(int, char**);
+extern int do_ls(int, char**);
+
+builtin_t builtins[] = {
+    //{ "exit", do_exit},
+    //{ "cd", do_cd},
+    { "ls", do_ls},
+    { NULL, NULL}
+};
 
 
 
@@ -20,13 +33,26 @@ int main(void) {
             continue;
         }
 
-        // getline leaves the end delimiter '\n' into the buffer
         if (line[nread-1] == '\n') {
             line[nread-1] = '\0';
         }
-        // exit command
-        if (strcmp(line, "exit") == 0) {
-            break;
+
+        // Parse the command
+        char *argv[64];
+        int argc = 0;
+        char *tok = strtok(line, " \t");
+        while(tok) {
+            argv[argc++] = tok;
+            tok = strtok(NULL, " \t");
+        }
+        argv[argc] = NULL;
+
+        // Iterate over our builtins table and execute the called command
+        // Stops when b->name is NULL and it evaluates to false
+        for (builtin_t *b = builtins; b->name; b++) {
+            if (strcmp(argv[0], b->name) == 0) {
+                b->fn(argc, argv);
+            }
         }
     }
     free(line);
