@@ -1,8 +1,8 @@
 
 CC := gcc
-CFLAGS := -std=gnu11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra
+CFLAGS := -std=gnu11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Iinclude
 
-SRCS := main.c ls.c
+SRCS := src/main.c src/ls.c src/cat.c
 OBJS := $(SRCS:.c=.o)
 TARGET := cash
 
@@ -15,7 +15,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Compile step 
-%.o: %.c
+src/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Clean everything after the build

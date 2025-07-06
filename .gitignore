@@ -1,1 +1,5 @@
-shell
+cash 
+src/ls.o
+src/main.o
+src/cat.o
+teksti.txt
