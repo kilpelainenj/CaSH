@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include <unistd.h>
 
 
 //extern int do_exit(int, char**);
@@ -26,7 +28,11 @@ int main(void) {
     ssize_t nread;
 
     while (1) {
-        printf("cash> ");
+        char buf[PATH_MAX];
+        if (getcwd(buf, sizeof(buf)) == NULL) {
+            perror("getcwd");
+        }
+        printf("cash> %s ", buf);
         fflush(stdout);
         nread = getline(&line, &len, stdin);
         if (nread == -1) {
