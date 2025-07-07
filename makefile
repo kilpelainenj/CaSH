@@ -2,7 +2,7 @@
 CC := gcc
 CFLAGS := -std=gnu11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Iinclude
 
-SRCS := src/main.c src/ls.c src/cat.c src/cd.c
+SRCS := src/main.c src/ls.c src/cat.c src/cd.c src/ascii.c
 OBJS := $(SRCS:.c=.o)
 TARGET := cash
 

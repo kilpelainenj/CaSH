@@ -12,6 +12,7 @@
 extern int do_ls(int, char**);
 extern int do_cat(int, char**);
 extern int do_cd(int, char**);
+extern int print_ascii(void);
 
 builtin_t builtins[] = {
     //{ "exit", do_exit},
@@ -28,6 +29,7 @@ int main(void) {
     char *line = NULL;
     size_t len = 0;
     ssize_t nread;
+    print_ascii();
 
     while (1) {
         char buf[PATH_MAX];
