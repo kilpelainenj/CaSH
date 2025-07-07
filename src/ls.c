@@ -17,7 +17,7 @@ int do_ls(int argc, char **argv) {
         if (entry->d_name[0] == '.') {
             continue;
         }
-        printf("%s ", entry->d_name);
+        printf("%s       ", entry->d_name);
     }
     putchar('\n');
     closedir(d);

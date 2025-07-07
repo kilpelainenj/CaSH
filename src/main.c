@@ -11,12 +11,14 @@
 //extern int do_cd(int, char**);
 extern int do_ls(int, char**);
 extern int do_cat(int, char**);
+extern int do_cd(int, char**);
 
 builtin_t builtins[] = {
     //{ "exit", do_exit},
     //{ "cd", do_cd},
     { "ls", do_ls},
     { "cat", do_cat},
+    { "cd", do_cd},
     { NULL, NULL}
 };
 
