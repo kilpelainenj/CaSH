@@ -5,6 +5,8 @@
 
 #define SC_INITIAL_CAP 4
 
+static void sc_grow(SimpleCommand *sc);
+
 void sc_init(SimpleCommand *sc) {
     sc->capacity = SC_INITIAL_CAP;
     sc->argc = 0;
@@ -31,7 +33,7 @@ void sc_clear(SimpleCommand *sc) {
     sc->argc = sc->capacity = 0;
 }
 
-void sc_grow(SimpleCommand *sc) {
+static void sc_grow(SimpleCommand *sc) {
     sc->capacity *= 2;
-    realloc(sc->arguments, sizeof(char *) * (sc->capacity +1));
+    sc->arguments = realloc(sc->arguments, sizeof(char *) * (sc->capacity +1));
 }
