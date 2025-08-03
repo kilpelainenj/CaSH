@@ -1,8 +1,10 @@
 #include "command.h"
+#include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <string.h>
 
 void cmd_init(Command *cmd) {
     cmd->capacity = 4;
@@ -74,25 +76,41 @@ void cmd_execute(Command *cmd) {
         return;
     }
 
-    pid_t pid = fork();
-    for (int i = 0; i < cmd->size; i++) {
-        if (pid < 0) {
-            perror("fork");
-            return exit(EXIT_FAILURE);
-        } else if (pid == 0) {
-            // Child process 
-            execvp(cmd->simple[i]->arguments[0], cmd->simple[i]->arguments);
-        } else { 
-            if (!cmd->background) {
-                waitpid(pid, NULL, 0);
+    if (cmd->size == 1){
+        char **argv = cmd->simple[0]->arguments;
+        int argc = cmd->simple[0]->argc;
+
+
+        for(int j = 0; builtins[j].name; j++) {
+            if (strcmp(argv[0], builtins[j].name) == 0){
+                builtins[j].fn(argc, argv);
+                return;
             }
+        }
+
+        for (int i = 0; i < cmd->size; i++) {
+            pid_t pid = fork();
+            if (pid < 0){
+                perror("fork");
+                return;
+            } 
+            if (pid == 0){
+                // Child process
+                execvp(cmd->simple[i]->arguments[0], cmd->simple[i]->arguments);
+                // execvp shouldn't return to this process, so we can throw an error here if it ever does
+                perror("execvp");
+                return;
+                
+            }else {
+                if (!cmd->background) { 
+                    waitpid(pid, NULL, 0);
+                }
+            }
+
         }
     }
 
-    // Just print the command for now
-    cmd_print(cmd);
-    
-}
 
+}
 void cmd_prompt(void) {
 }

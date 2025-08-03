@@ -5,13 +5,16 @@
 
 typedef struct {
     int capacity;
+    // Tells how many simple commands are in the command
     int size;
+    // Array of simple commands
     SimpleCommand **simple;
 
     char *outfile;
     char *infile;
     char *errfile;
 
+    // A flag to tell if the command should run on the background
     int background;
 } Command;
 

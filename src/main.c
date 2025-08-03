@@ -11,16 +11,18 @@
 
 //extern int do_exit(int, char**);
 //extern int do_cd(int, char**);
-extern int do_ls(int, char**);
-extern int do_cat(int, char**);
 extern int do_cd(int, char**);
 extern int print_ascii(void);
 
+
+
+// These are the built-ins that have to run in the main process,
+// because they modify the shell state
 builtin_t builtins[] = {
     //{ "exit", do_exit},
-    //{ "cd", do_cd},
-    { "ls", do_ls},
-    { "cat", do_cat},
+    //{ "export", do_export},
+    //{ "unset", do_unset},
+    //{ "pwd", shell_pwd},
     { "cd", do_cd},
     { NULL, NULL}
 };
