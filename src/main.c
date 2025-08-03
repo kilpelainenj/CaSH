@@ -5,6 +5,8 @@
 #include <string.h>
 #include <limits.h>
 #include <unistd.h>
+#include "command.h"
+#include "simple_command.h"
 
 
 //extern int do_exit(int, char**);
@@ -45,27 +47,49 @@ int main(void) {
             continue;
         }
 
+        // Prepare input for parser (ensure it ends with newline)
+        char *input_line = malloc(strlen(line) + 2);
+        strcpy(input_line, line);
+        
+        // Check if the line already ends with newline
         if (line[nread-1] == '\n') {
             line[nread-1] = '\0';
+            // Don't add another newline since it was already there
+            input_line[strlen(input_line)] = '\0'; 
+        } else {
+            strcat(input_line, "\n");
         }
-
-        // Parse the command
-        char *argv[64];
-        int argc = 0;
-        char *tok = strtok(line, " \t");
-        while(tok) {
-            argv[argc++] = tok;
-            tok = strtok(NULL, " \t");
+        
+        // For debugging purposes
+        /*
+        fprintf(stderr, "Input to parser: '%s' (length: %zu)\n", input_line, strlen(input_line));
+        for (size_t i = 0; i < strlen(input_line); i++) {
+            fprintf(stderr, "char[%zu] = '%c' (%d)\n", i, input_line[i], input_line[i]);
         }
-        argv[argc] = NULL;
-
-        // Iterate over our builtins table and execute the called command
-        // Stops when b->name is NULL and it evaluates to false
-        for (builtin_t *b = builtins; b->name; b++) {
-            if (strcmp(argv[0], b->name) == 0) {
-                b->fn(argc, argv);
-            }
+        */        
+        // Create a temp file for the parser
+        FILE *temp_file = tmpfile();
+        if (!temp_file) {
+            perror("tmpfile");
+            free(input_line);
+            continue;
         }
+        
+        // Write the input to the temp file and set it as the input for the PARSER
+        fwrite(input_line, 1, strlen(input_line), temp_file);
+        rewind(temp_file);
+        
+        
+        extern FILE *yyin;
+        extern int yyparse(void);
+        yyin = temp_file;
+        
+        
+        int parse_result = yyparse();
+        
+        fclose(temp_file);
+        free(input_line);
+        
     }
     free(line);
     return EXIT_SUCCESS;

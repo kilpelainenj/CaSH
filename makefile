@@ -12,7 +12,7 @@ TARGET := cash
 
 all: $(TARGET)
 
-# Link step 
+# Link step (notice the -ll flag for the lexer) 
 $(TARGET): $(OBJS) $(PARSER_OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ -ll
 

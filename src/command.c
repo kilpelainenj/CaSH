@@ -1,7 +1,8 @@
 #include "command.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <sys/wait.h>
+#include <unistd.h>
 
 void cmd_init(Command *cmd) {
     cmd->capacity = 4;
@@ -72,7 +73,22 @@ void cmd_execute(Command *cmd) {
     if (!cmd || cmd->size == 0) {
         return;
     }
-    
+
+    pid_t pid = fork();
+    for (int i = 0; i < cmd->size; i++) {
+        if (pid < 0) {
+            perror("fork");
+            return exit(EXIT_FAILURE);
+        } else if (pid == 0) {
+            // Child process 
+            execvp(cmd->simple[i]->arguments[0], cmd->simple[i]->arguments);
+        } else { 
+            if (!cmd->background) {
+                waitpid(pid, NULL, 0);
+            }
+        }
+    }
+
     // Just print the command for now
     cmd_print(cmd);
     

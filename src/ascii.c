@@ -4,7 +4,6 @@
 
 int print_ascii(void) {
 
-    
     printf(
         "   ______      _____ __  __\n"
         "  / ____/___ _/ ___// / / /\n"
@@ -15,4 +14,3 @@ int print_ascii(void) {
     );
     return EXIT_SUCCESS;
 }
-
