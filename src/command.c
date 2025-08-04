@@ -72,43 +72,55 @@ void cmd_print(const Command *cmd) {
 }
 
 void cmd_execute(Command *cmd) {
-    if (!cmd || cmd->size == 0) {
-        return;
-    }
-
-    if (cmd->size == 1){
-        char **argv = cmd->simple[0]->arguments;
-        int argc = cmd->simple[0]->argc;
+    int N = cmd->size;
+    if (N == 0) return;
 
 
-        for(int j = 0; builtins[j].name; j++) {
-            if (strcmp(argv[0], builtins[j].name) == 0){
-                builtins[j].fn(argc, argv);
-                return;
-            }
-        }
-
-        for (int i = 0; i < cmd->size; i++) {
-            pid_t pid = fork();
-            if (pid < 0){
-                perror("fork");
-                return;
-            } 
-            if (pid == 0){
-                // Child process
-                execvp(cmd->simple[i]->arguments[0], cmd->simple[i]->arguments);
-                // execvp shouldn't return to this process, so we can throw an error here if it ever does
-                perror("execvp");
-                return;
-                
-            }else {
-                if (!cmd->background) { 
-                    waitpid(pid, NULL, 0);
-                }
-            }
-
+    int pipes[N-1][2];
+    for (int i = 0; i < N-1; i++) {
+        if (pipe(pipes[i]) < 0) {
+            perror("pipe");
+            return;
         }
     }
+
+    for (int i = 0; i < N; i++) {
+        pid_t pid = fork();
+        if (pid < 0) {
+            perror("fork");
+            return;
+        }
+        if (pid == 0){
+            // Child 
+            if (i > 0) dup2(pipes[i-1][0], STDIN_FILENO);
+            if (i < N-1) dup2(pipes[i][1], STDOUT_FILENO);
+            for (int j = 0; j < N-1; j++) {
+                close(pipes[j][0]);
+                close(pipes[j][1]);
+            }
+            execvp(cmd->simple[i]->arguments[0], cmd->simple[i]->arguments);
+            perror("execvp");
+            return;
+        }
+        // Parent just goes to the next cmd
+    }
+
+    for (int i = 0; i < N-1; i++) {
+        close(pipes[i][0]);
+        close(pipes[i][1]);
+    }
+    if (!cmd->background) {
+        for(int i = 0; i < N; i++) {
+            // Here we wait for ANY child process to terminate and do this for N times
+            wait(NULL);
+        }
+    }
+
+    
+        
+    
+
+
 
 
 }
