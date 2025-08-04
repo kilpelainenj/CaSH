@@ -10,6 +10,7 @@
 #include "exit.h"
 #include "pwd.h"
 #include "export.h"
+#include "unset.h"
 
 //extern int do_exit(int, char**);
 //extern int do_cd(int, char**);
@@ -18,6 +19,7 @@ extern int print_ascii(void);
 extern int do_exit(int, char**);
 extern int do_pwd(int, char**);
 extern int do_export(int, char**);
+extern int do_unset(int, char**);
 
 
 
@@ -26,7 +28,7 @@ extern int do_export(int, char**);
 builtin_t builtins[] = {
     { "exit", do_exit},
     { "export", do_export},
-    //{ "unset", do_unset},
+    { "unset", do_unset},
     { "pwd", do_pwd},
     { "cd", do_cd},
     { NULL, NULL}

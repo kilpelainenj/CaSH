@@ -1,0 +1,1 @@
+int do_unset(int argc, char **argv);
