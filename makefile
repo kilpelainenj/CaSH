@@ -2,7 +2,7 @@
 CC := gcc
 CFLAGS := -std=gnu11 -D_POSIX_C_SOURCE=200809L -Wall -Wextra -Iinclude
 
-SRCS := src/main.c src/ls.c src/cat.c src/cd.c src/ascii.c src/command.c src/simple_command.c src/exit.c
+SRCS := src/main.c src/ls.c src/cat.c src/cd.c src/ascii.c src/command.c src/simple_command.c src/exit.c src/pwd.c
 PARSER_SRCS := src/shell.y src/shell.l
 PARSER_OBJS := shell.tab.o lex.yy.o
 OBJS := $(SRCS:.c=.o)
