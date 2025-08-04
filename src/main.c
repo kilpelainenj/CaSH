@@ -9,6 +9,7 @@
 #include "simple_command.h"
 #include "exit.h"
 #include "pwd.h"
+#include "export.h"
 
 //extern int do_exit(int, char**);
 //extern int do_cd(int, char**);
@@ -16,6 +17,7 @@ extern int do_cd(int, char**);
 extern int print_ascii(void);
 extern int do_exit(int, char**);
 extern int do_pwd(int, char**);
+extern int do_export(int, char**);
 
 
 
@@ -23,7 +25,7 @@ extern int do_pwd(int, char**);
 // because they modify the shell state
 builtin_t builtins[] = {
     { "exit", do_exit},
-    //{ "export", do_export},
+    { "export", do_export},
     //{ "unset", do_unset},
     { "pwd", do_pwd},
     { "cd", do_cd},
@@ -90,7 +92,7 @@ int main(void) {
         yyin = temp_file;
         
         
-        int parse_result = yyparse();
+        yyparse();
         
         fclose(temp_file);
         free(input_line);
