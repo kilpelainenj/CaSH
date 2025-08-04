@@ -7,19 +7,20 @@
 #include <unistd.h>
 #include "command.h"
 #include "simple_command.h"
-
+#include "exit.h"
 
 //extern int do_exit(int, char**);
 //extern int do_cd(int, char**);
 extern int do_cd(int, char**);
 extern int print_ascii(void);
+extern int do_exit(int, char**);
 
 
 
 // These are the built-ins that have to run in the main process,
 // because they modify the shell state
 builtin_t builtins[] = {
-    //{ "exit", do_exit},
+    { "exit", do_exit},
     //{ "export", do_export},
     //{ "unset", do_unset},
     //{ "pwd", shell_pwd},

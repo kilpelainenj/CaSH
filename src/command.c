@@ -76,6 +76,17 @@ void cmd_execute(Command *cmd) {
     if (N == 0) return;
 
 
+    if (N == 1) {
+        extern builtin_t builtins[];
+
+        for (int j = 0; builtins[j].name; j++) {
+            if (strcmp(cmd->simple[0]->arguments[0], builtins[j].name) == 0){
+                builtins[j].fn(cmd->simple[0]->argc, cmd->simple[0]->arguments);
+                return;
+            }
+        }
+    }
+
     int pipes[N-1][2];
     for (int i = 0; i < N-1; i++) {
         if (pipe(pipes[i]) < 0) {

@@ -12,6 +12,7 @@ int do_cd(int argc, char **argv) {
     char *dir = argv[1];
     if (chdir(dir) != 0) {
         perror("cd");
+        return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;
