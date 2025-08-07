@@ -11,6 +11,7 @@
 #include "pwd.h"
 #include "export.h"
 #include "unset.h"
+#include "dirsum.h"
 
 //extern int do_exit(int, char**);
 //extern int do_cd(int, char**);
@@ -31,12 +32,14 @@ builtin_t builtins[] = {
     { "unset", do_unset},
     { "pwd", do_pwd},
     { "cd", do_cd},
+    { "dirsum", do_dirsum},
     { NULL, NULL}
 };
 
 
 
 int main(void) {
+    system("clear");
     char *line = NULL;
     size_t len = 0;
     ssize_t nread;

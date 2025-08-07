@@ -20,7 +20,6 @@ int is_valid_unset_name(const char *name) {
 }
 
 int do_unset(int argc, char **argv) {
-    // Check if no arguments provided
     if (argc == 1 || argv[1] == NULL) {
         fprintf(stderr, "unset: usage: unset [-v] name [name ...]\n");
         return 1;
@@ -53,7 +52,6 @@ int do_unset(int argc, char **argv) {
             continue;
         }
         
-        // Attempt to unset the variable
         if (unsetenv(name) != 0) {
             perror("unset");
             ret = 1;
