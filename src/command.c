@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
+#include "builtins.h"
 
 void cmd_init(Command *cmd) {
     cmd->capacity = 4;
@@ -77,7 +78,7 @@ void cmd_execute(Command *cmd) {
 
 
     if (N == 1) {
-        extern builtin_t builtins[];
+        extern const builtin_t builtins[];
 
         for (int j = 0; builtins[j].name; j++) {
             if (strcmp(cmd->simple[0]->arguments[0], builtins[j].name) == 0){
@@ -126,13 +127,6 @@ void cmd_execute(Command *cmd) {
             wait(NULL);
         }
     }
-
-    
-        
-    
-
-
-
 
 }
 void cmd_prompt(void) {
