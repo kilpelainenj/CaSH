@@ -12,9 +12,8 @@
 #include "export.h"
 #include "unset.h"
 #include "dirsum.h"
+#include  "builtins.h"
 
-//extern int do_exit(int, char**);
-//extern int do_cd(int, char**);
 extern int do_cd(int, char**);
 extern int print_ascii(void);
 extern int do_exit(int, char**);
@@ -24,17 +23,6 @@ extern int do_unset(int, char**);
 
 
 
-// These are the built-ins that have to run in the main process,
-// because they modify the shell state
-builtin_t builtins[] = {
-    { "exit", do_exit},
-    { "export", do_export},
-    { "unset", do_unset},
-    { "pwd", do_pwd},
-    { "cd", do_cd},
-    { "dirsum", do_dirsum},
-    { NULL, NULL}
-};
 
 
 
@@ -66,7 +54,6 @@ int main(void) {
         // Check if the line already ends with newline
         if (line[nread-1] == '\n') {
             line[nread-1] = '\0';
-            // Don't add another newline since it was already there
             input_line[strlen(input_line)] = '\0'; 
         } else {
             strcat(input_line, "\n");
