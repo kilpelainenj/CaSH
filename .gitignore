@@ -1,2 +1,37 @@
-cash 
+# Executable
+cash
+test_runner 
+# Object files
+*.o
 src/*.o
+
+# Generated parser files (Bison)
+*.tab.c
+*.tab.h
+*.output
+
+# Generated lexer files (Flex)
+lex.yy.c
+
+# Build artifacts
+*.a
+*.so
+*.dylib
+
+# Debug files
+*.dSYM/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
