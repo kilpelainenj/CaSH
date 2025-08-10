@@ -1,3 +1,3 @@
 
 
-int do_cat(int argc, char **argv);
+int do_cat(int argc, char** argv);

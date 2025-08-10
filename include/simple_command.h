@@ -4,12 +4,12 @@
 typedef struct {
     int capacity;
     int argc;
-    char **arguments;
+    char** arguments;
 } SimpleCommand;
 
-void sc_init(SimpleCommand *sc);
-void sc_clear(SimpleCommand *sc);
+void sc_init(SimpleCommand* sc);
+void sc_clear(SimpleCommand* sc);
 
-void sc_insert_arg(SimpleCommand *sc, const char *arg);
+void sc_insert_arg(SimpleCommand* sc, const char* arg);
 
 #endif

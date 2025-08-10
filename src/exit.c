@@ -1,14 +1,14 @@
 #include "exit.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-
-int do_exit(int argc, char **argv) {
+int do_exit(int argc, char** argv)
+{
     int code = EXIT_SUCCESS;
 
     if (argc > 1) {
-        char * end;
+        char* end;
         long v = strtol(argv[1], &end, 10);
 
         if (*end != '\0') {
@@ -17,8 +17,6 @@ int do_exit(int argc, char **argv) {
         } else {
             code = (int)v;
         }
-
     }
     exit(code);
-
 }

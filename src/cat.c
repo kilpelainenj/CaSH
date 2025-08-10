@@ -1,15 +1,16 @@
 #include "cat.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
-int do_cat(int argc, char **argv) {
+int do_cat(int argc, char** argv)
+{
     if (argc == 1) {
         fprintf(stderr, "cat: Missing operand\n");
         return EXIT_FAILURE;
     }
-    const char *filename = argv[1];
+    const char* filename = argv[1];
     int fd = open(filename, O_RDONLY);
     if (fd == -1) {
         perror(filename);

@@ -5,11 +5,11 @@ extern "C" {
 #endif
 
 typedef struct {
-    const char *name;
-    int (*fn)(int argc, char **argv);
+    const char* name;
+    int (*fn)(int argc, char** argv);
 } builtin_t;
 
-extern const builtin_t builtins[];  // defined in builtins.c
+extern const builtin_t builtins[]; // defined in builtins.c
 
 #ifdef __cplusplus
 }

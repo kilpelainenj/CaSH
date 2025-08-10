@@ -1,2 +1,2 @@
 
-int do_ls(int argc, char **argv);
+int do_ls(int argc, char** argv);

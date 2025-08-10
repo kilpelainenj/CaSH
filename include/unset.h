@@ -1,1 +1,1 @@
-int do_unset(int argc, char **argv);
+int do_unset(int argc, char** argv);

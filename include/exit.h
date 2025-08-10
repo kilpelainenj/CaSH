@@ -1,1 +1,1 @@
-int do_exit(int argc, char **argv);
+int do_exit(int argc, char** argv);

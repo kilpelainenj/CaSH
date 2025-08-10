@@ -1,1 +1,1 @@
-int do_export(int argc, char **argv);
+int do_export(int argc, char** argv);

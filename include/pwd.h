@@ -1,1 +1,1 @@
-int do_pwd(int argc, char **argv);
+int do_pwd(int argc, char** argv);

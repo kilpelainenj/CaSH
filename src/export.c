@@ -1,45 +1,48 @@
 #include "export.h"
 #include <ctype.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-
-int is_valid_name(const char *name) {
-    if (!name || !*name) return 0;
+int is_valid_name(const char* name)
+{
+    if (!name || !*name)
+        return 0;
 
     // First character must be alphanumeric or underscore
-    if (!isalpha(*name) && *name != '_') return 0;
+    if (!isalpha(*name) && *name != '_')
+        return 0;
 
     // remaining chars must be alphanumeric or underscore
     for (int i = 1; name[i]; i++) {
-        if (!isalnum(name[i]) && name[i] != '_') return 0;
+        if (!isalnum(name[i]) && name[i] != '_')
+            return 0;
     }
 
     return 1;
 }
 
-int do_export(int argc, char **argv) {
+int do_export(int argc, char** argv)
+{
     if (argc == 1 || argv[1] == NULL) {
-        extern char **environ;
+        extern char** environ;
         for (int i = 0; environ[i] != NULL; i++) {
             printf("declare -x %s\n", environ[i]);
         }
         return 0;
-
     }
 
     int ret = 0;
 
     for (int i = 1; i < argc && argv[i] != NULL; i++) {
-        char *arg = strdup(argv[i]);
+        char* arg = strdup(argv[i]);
         if (!arg) {
             perror("export");
             return 1;
         }
 
-        char *equals = strchr(arg, '=');
+        char* equals = strchr(arg, '=');
         char *name, *value;
 
         if (equals != NULL) {

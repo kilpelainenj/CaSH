@@ -1,2 +1,2 @@
 
-int do_dirsum(int argc, char **argv);
+int do_dirsum(int argc, char** argv);
