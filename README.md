@@ -1,5 +1,5 @@
 # CaSH
-You can find a short writeup about the project at www
+You can find a short writeup about the project at https://kilpelainenj.com/2025/08/10/A-Simple-Shell.html
 
 CaSH is a shell with functionalities like environment variables, variable expansion, output and input redirection, pipelines, background execution
 and a dirsum command, that uses an LLM to create a summary of your current directory.
